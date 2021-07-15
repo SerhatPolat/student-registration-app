@@ -1,0 +1,55 @@
+.App {
+  text-align: center;
+  font-family: "Varela Round", sans-serif;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  border: 1px solid darkblue;
+  padding: 10px;
+  margin: auto;
+  margin-top: -1px;
+}
+
+ul {
+  margin-left: -40px;
+}
+
+.addNewStudentSection {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  min-width: 300px;
+  margin: auto;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.addNewStudentSection input {
+  padding: 10px;
+}
+
+.addNewStudentSection select {
+  padding: 10px;
+}
+
+.addNewStudentSection button {
+  cursor: pointer;
+  background-color: darkblue;
+  color: white;
+  height: 50px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.addNewStudentSection button:active {
+  border: 2px solid black;
+  background-color: white;
+  color: darkblue;
+}
+
+.selectBoxPlaceholder {
+  display: none;
+}
