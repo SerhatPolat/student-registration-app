@@ -1,3 +1,150 @@
+<h2>App.tsx</h2>
+<code>
+  
+    import { useState } from "react";
+    import "./App.css";
+    import StudentList from "./components/studentList";
+    import AddNewStudent from "./components/addNewStudent";
+
+    export interface IState {
+      student: {
+        name: string;
+        age: number;
+        courseFeePaid: string;
+      }[];
+    }
+
+    function App() {
+      const [student, setStudent] = useState<IState["student"]>([
+        {
+          name: "Serhat Polat",
+          age: 19,
+          courseFeePaid: "paid",
+        },
+      ]);
+
+      return (
+        <div className="App">
+          <h1>Enroll New Student</h1>
+          <AddNewStudent student={student} setStudent={setStudent} />
+          <h1>Student List</h1>
+          <StudentList student={student} />
+        </div>
+      );
+    }
+
+    export default App;
+</code>
+  
+<h2>studentList.tsx</h2>
+<code>
+  
+    import { IState as IProps } from "../App";
+
+    const StudentList = ({ student }: IProps) => {
+      const renderStudentList = () => {
+        return student.map((student) => {
+          return (
+            <li className="StudentList" key={student.name}>
+              <p>{student.name}</p>
+              <p>{student.age} years old</p>
+              <p>{student.courseFeePaid} his/her fee</p>
+            </li>
+          );
+        });
+      };
+
+      return <ul>{renderStudentList()}</ul>;
+    };
+
+    export default StudentList;
+</code>
+
+<h2>addNewStudent.tsx</h2>
+<code>
+  
+    import React, { useState } from "react";
+    import { IState as Props } from "../App";
+
+    interface IProps {
+      student: Props["student"];
+      setStudent: React.Dispatch<React.SetStateAction<Props["student"]>>;
+    }
+
+    const AddNewStudent: React.FC<IProps> = ({ student, setStudent }) => {
+      const [input, setInput] = useState({
+        name: "",
+        age: "",
+        courseFeePaid: "",
+      });
+
+      const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+      ): void => {
+        setInput({
+          ...input,
+          [e.target.name]: e.target.value,
+        });
+      };
+
+      const handleClick = (): void => {
+        if (!input.name || !input.age) {
+          return;
+        }
+
+        setStudent([
+          ...student,
+          {
+            name: input.name,
+            age: parseInt(input.age),
+            courseFeePaid: input.courseFeePaid,
+          },
+        ]);
+
+        setInput({
+          name: "",
+          age: "",
+          courseFeePaid: "",
+        });
+      };
+
+      return (
+        <div className="addNewStudentSection">
+          <input
+            type="text"
+            placeholder="Enter name"
+            value={input.name}
+            onChange={handleChange}
+            name="name"
+          />
+          <input
+            type="number"
+            placeholder="Enter age"
+            value={input.age}
+            onChange={handleChange}
+            name="age"
+          />
+          <select
+            name="courseFeePaid"
+            id="courseFeePaid"
+            value={input.courseFeePaid}
+            onChange={handleChange}
+          >
+            <option value="" className="selectBoxPlaceholder">
+              Course fee has been paid or not?
+            </option>
+            <option value="paid">paid</option>
+            <option value="not paid">not paid</option>
+          </select>
+          <button onClick={handleClick}>ENROLL</button>
+        </div>
+      );
+    };
+
+    export default AddNewStudent;
+</code>
+
+<hr>
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
